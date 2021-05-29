@@ -35,7 +35,6 @@ def novoMovimento(x, y, estado,grid):
 
 
 def novoLocal(x,y,movimento):
-
     if (movimento == "cima"):
         if (x-1<0):
             x = x

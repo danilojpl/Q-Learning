@@ -1,13 +1,8 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.colors
 import agente
 import config 
 
 
-
-class Learning:
-
+class Treinar:
     def __init__(self):
         self.estado = config.MOVIMENTOS
         self.alfa = config.ALFA
@@ -20,13 +15,11 @@ class Learning:
     def criarDicionario(self, grid):
         for i in range(len(grid)*10):
             dictPontos = {} 
-            # dictPontos[str(i)] = 0
             dictPontos["cima"] = 0
             dictPontos["baixo"] = 0
             dictPontos["direita"] = 0
             dictPontos["esquerda"] = 0
             self.estado[i] = dictPontos
-        # print("teste")
     
     def qLearning(self,x, y, movimento,xprox, yprox ,recompensa):
         prox = int(str(xprox)+str(yprox))
@@ -41,14 +34,13 @@ class Learning:
 
     def calcPontuacao(self, grid):
         print ("Treinando...")
-        for episode in range(50000):
+        for faseTreinamento in range(50000):
             linha, coluna = agente.localInicio(grid)
             while not agente.estadoTerminal(linha,coluna, grid):
                 acao = agente.novoMovimento(linha, coluna,self.estado, grid)
 
                 antLinha = linha 
                 antColuna = coluna 
-
                 linha, coluna = agente.novoLocal(linha, coluna, acao)
 
                 recompensa = grid[linha,coluna]

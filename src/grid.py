@@ -7,10 +7,10 @@ import matplotlib.colors
 
 def plot(grid):
     colors = np.array([[0,200,200,200],
-                    [1,170,255,245],
-                    [-1,208,130,40],
+                    [1,0,0,0],
+                    [-1,255,153,0],
                     [100,63,165,76],
-                    [200,255,255,255]])
+                    [200,255,0,0]])
 
     u, ind = np.unique(grid, return_inverse=True)
     b = ind.reshape((grid.shape))
@@ -20,11 +20,8 @@ def plot(grid):
     norm = matplotlib.colors.BoundaryNorm(np.arange(len(colors)+1)-0.5, len(colors))
 
     plt.imshow(b, cmap=cmap, norm=norm)
-
-    cb = plt.colorbar(ticks=np.arange(len(colors)))
-    cb.ax.set_yticklabels(np.unique(colors[:,0]))
-
-    plt.show()
+    plt.ion()
+    plt.pause(1)
 
 
 def melhorCaminho(recompensas,x,y): 
@@ -65,4 +62,5 @@ def melhorCaminho(recompensas,x,y):
             grid[x,y-1] = 100
             y = y-1
         plot(grid)
+    plt.close()
         

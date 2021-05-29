@@ -1,13 +1,10 @@
-import numpy as np 
 from config import GRID
-from learning import Learning 
+from treinar import Treinar 
 from agente import estadoTerminal
 from grid import melhorCaminho 
 
 
-
-
-aprender = Learning()
+aprender = Treinar()
 aprender.criarDicionario(GRID)
 recompensas = aprender.calcPontuacao(GRID)
 
