@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.colors
-import config
+import agente
+import config 
 
 
 
@@ -27,42 +28,41 @@ class Learning:
             self.estado[i] = dictPontos
         # print("teste")
     
-    # def qLearning(self, posicao ,movimento, grid):
-    #     for movimento in self.dictPontos:
-    #         if ()
-
-    #          self.estado[int(str(i)+str(j))]["baixo"] = self.estado[int(str(i)+str(j))]["baixo"]+self.alfa*(
-    #                 self.branco+self.gama*self.estado[int(str(i)+str(j))+1].get(
-    #                 sorted(self.estado[int(str(i)+str(j))+1].keys(), key=lambda x: self.estado[int(str(i)+str(j))+1][x])[-1] )-self.estado[int(str(i)+str(j))]["baixo"])
+    def qLearning(self,x, y, movimento,xprox, yprox ,recompensa):
+        prox = int(str(xprox)+str(yprox))
+        posicao = int(str(x)+str(y))
+        qValue = self.estado[posicao][movimento]+self.alfa*(
+                                                        recompensa+self.gama*self.estado[prox].get(
+                                                        sorted(self.estado[prox].keys(), 
+                                                        key=lambda x: self.estado[prox][x])[-1] )-
+                                                        self.estado[posicao][movimento])
+        return qValue
 
 
     def calcPontuacao(self, grid):
-        for i in range (len(grid)):
-            for j in range (len(grid)):
-                if (grid[i+1][j] == 0):
-                    self.estado[int(str(i)+str(j))]["baixo"] = self.estado[int(str(i)+str(j))]["baixo"]+self.alfa*(
-                    self.branco+self.gama*self.estado[int(str(i)+str(j))+1].get(
-                    sorted(self.estado[int(str(i)+str(j))+1].keys(), key=lambda x: self.estado[int(str(i)+str(j))+1][x])[-1] )-self.estado[int(str(i)+str(j))]["baixo"])
+        print ("Treinando...")
+        for episode in range(50000):
+            linha, coluna = agente.localInicio(grid)
+            while not agente.estadoTerminal(linha,coluna, grid):
+                acao = agente.novoMovimento(linha, coluna,self.estado, grid)
+
+                antLinha = linha 
+                antColuna = coluna 
+
+                linha, coluna = agente.novoLocal(linha, coluna, acao)
+
+                recompensa = grid[linha,coluna]
+                antQvalue = self.estado[int(str(antLinha)+str(antColuna))][acao]
+                qValue = self.qLearning(antLinha, antColuna, acao, linha, coluna, recompensa)
+                self.estado[int(str(antLinha)+str(antColuna))][acao] = qValue
+        print ("Treinamento Finalizado")        
+        return self.estado 
+        
 
     
 
 
 
-grid = np.array ([[0,1,1,1,0,1,0,0,1,0],
-                [0,-1,0,0,0,0,0,-1,0,-1],
-                [0,1,1,0,1,1,0,0,0,1],
-                [0,0,0,0,0,0,1,1,0,1],
-                [1,-1,-1,1,0,-1,100,0,0,0],
-                [0,0,0,1,0,0,1,1,1,0],
-                [0,1,1,1,-1,0,1,1,-1,0],
-                [0,0,0,-1,1,0,-1,0,0,0],
-                [1,-1,0,0,0,0,0,0,0,1],
-                [-1,1,0,1,1,200,0,1,0,-1]])
-
-aprender = Learning()
-aprender.criarDicionario(grid)
-aprender.calcPontuacao(grid)
-        	
         
 
 
