@@ -40,7 +40,6 @@ class Treinar:
                 linha, coluna = agente.novoLocal(linha, coluna, acao)
 
                 recompensa = grid[linha,coluna]
-                antQvalue = self.estado[int(str(antLinha)+str(antColuna))][acao]
                 qValue = self.qLearning(antLinha, antColuna, acao, linha, coluna, recompensa)
                 self.estado[int(str(antLinha)+str(antColuna))][acao] = qValue
         print ("Treinamento Finalizado")        
