@@ -4,13 +4,9 @@ import config
 
 class Treinar:
     def __init__(self):
-        self.estado = config.MOVIMENTOS
+        self.estado = {}
         self.alfa = config.ALFA
         self.gama = config.GAMA
-        self.branco = config.RECOMPENSAS.get("branco")
-        self.atropelar = config.RECOMPENSAS.get("atropelar")
-        self.bater = config.RECOMPENSAS.get("bater")
-        self.destino = config.RECOMPENSAS.get("destino")
 
     def criarDicionario(self, grid):
         for i in range(len(grid)*10):
